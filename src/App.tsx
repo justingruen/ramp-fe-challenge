@@ -13,6 +13,7 @@ export function App() {
   const { data: paginatedTransactions, ...paginatedTransactionsUtils } = usePaginatedTransactions()
   const { data: transactionsByEmployee, ...transactionsByEmployeeUtils } = useTransactionsByEmployee()
   const [isEmployeesLoading, setIsEmployeesLoading] = useState<boolean>(true);
+  const [isDataLoading, setIsDataLoading] = useState<boolean>(true);
 
   useEffect(() => {
     if (employees !== null) {
@@ -26,16 +27,20 @@ export function App() {
   )
 
   const loadAllTransactions = useCallback(async () => {
+    setIsDataLoading(true);
     transactionsByEmployeeUtils.invalidateData()
 
     await employeeUtils.fetchAll()
     await paginatedTransactionsUtils.fetchAll()
+    setIsDataLoading(false);
   }, [employeeUtils, paginatedTransactionsUtils, transactionsByEmployeeUtils])
 
   const loadTransactionsByEmployee = useCallback(
     async (employeeId: string) => {
+      setIsDataLoading(true);
       paginatedTransactionsUtils.invalidateData()
       await transactionsByEmployeeUtils.fetchById(employeeId)
+      setIsDataLoading(false);
     },
     [paginatedTransactionsUtils, transactionsByEmployeeUtils]
   )
@@ -55,6 +60,7 @@ export function App() {
 
         <InputSelect<Employee>
           isLoading={isEmployeesLoading}
+          isDataLoading={isDataLoading}
           defaultValue={EMPTY_EMPLOYEE}
           items={employees === null ? [] : [EMPTY_EMPLOYEE, ...employees]}
           label="Filter by employee"
@@ -98,6 +104,3 @@ export function App() {
     </Fragment>
   )
 }
-
-
-// attach a scroll event handler to window

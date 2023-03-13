@@ -11,7 +11,8 @@ export function InputSelect<TItem>({
   parseItem,
   isLoading,
   loadingLabel,
-}: InputSelectProps<TItem>) {  
+  isDataLoading,
+}: InputSelectProps<TItem>) {
   const [selectedValue, setSelectedValue] = useState<TItem | null>(defaultValue ?? null)
   const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>({
     top: 0,
@@ -100,10 +101,12 @@ export function InputSelect<TItem>({
                   key: parsedItem.value,
                   index,
                   item,
+                  disabled: isDataLoading,
                   className: classNames("RampInputSelect--dropdown-item", {
                     "RampInputSelect--dropdown-item-highlighted": highlightedIndex === index,
                     "RampInputSelect--dropdown-item-selected":
                       parsedSelectedItem?.value === parsedItem.value,
+                    "RampInputSelect--dropdown-item-disabled": isDataLoading
                   }),
                 })}
               >

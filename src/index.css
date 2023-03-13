@@ -122,6 +122,10 @@ hr.RampBreak--l {
   font-weight: bold;
 }
 
+.RampInputSelect--dropdown-item-disabled {
+  color: gray;
+}
+
 .RampInputCheckbox--container {
   display: flex;
 }
