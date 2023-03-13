@@ -11,18 +11,7 @@ export function InputSelect<TItem>({
   parseItem,
   isLoading,
   loadingLabel,
-}: InputSelectProps<TItem>) {
-  // useEffect(() => {
-  //   function handleScroll(e: any) {
-  //     console.log("scrolling");
-  //     // setDropdownPosition(getDropdownPosition(myRef.current!))
-  //   }
-  //   window.addEventListener("scroll", handleScroll, { passive: true });
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-  
+}: InputSelectProps<TItem>) {  
   const [selectedValue, setSelectedValue] = useState<TItem | null>(defaultValue ?? null)
   const [dropdownPosition, setDropdownPosition] = useState<DropdownPosition>({
     top: 0,

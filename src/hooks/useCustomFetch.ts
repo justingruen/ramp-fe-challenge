@@ -2,6 +2,7 @@ import { useCallback, useContext } from "react"
 import { AppContext } from "../utils/context"
 import { fakeFetch, RegisteredEndpoints } from "../utils/fetch"
 import { useWrappedRequest } from "./useWrappedRequest"
+import { SetTransactionApprovalParams } from "src/utils/types"
 
 export function useCustomFetch() {
   const { cache } = useContext(AppContext)
@@ -34,11 +35,7 @@ export function useCustomFetch() {
     ): Promise<TData | null> =>
       wrappedRequest<TData>(async () => {
         const result = await fakeFetch<TData>(endpoint, params)
-        console.log('RESULT', result)
-
-        const cacheKey = getCacheKey(endpoint, params)
-        cache?.current.set(cacheKey, JSON.stringify(result))
-
+        clearCacheByEndpoint(['paginatedTransactions', 'transactionsByEmployee']);
         return result
       }),
     [wrappedRequest]
